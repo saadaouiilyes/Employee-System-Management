@@ -1,5 +1,6 @@
 package com.inn.system.system.management.employee.application.services;
 
+import com.inn.system.system.management.employee.infrastructure.adapters.out.EmployeeJpaRepository;
 import com.inn.system.system.management.employee.application.port.in.EmployeeService;
 import com.inn.system.system.management.employee.application.port.out.EmployeeRepository;
 import com.inn.system.system.management.employee.domain.model.Employee;
@@ -10,11 +11,18 @@ import java.util.List;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
+
+
+    private final  EmployeeJpaRepository employeeJpaRepository;
     private final EmployeeRepository employeeRepository;
 
+
+
     @Autowired
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+    public EmployeeServiceImpl(EmployeeJpaRepository employeeJpaRepository , EmployeeRepository employeeRepository) {
+        this.employeeJpaRepository = employeeJpaRepository;
         this.employeeRepository = employeeRepository;
+
     }
 
     @Override
@@ -30,7 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+        return employeeJpaRepository.findAll();
     }
 
     @Override
@@ -38,7 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee existingEmployee = employeeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
         existingEmployee.setName(employee.getName());
-        existingEmployee.setPosition(employee.getPosition());
+        existingEmployee.setJobTitle(employee.getJobTitle());
         employee.setSalary(existingEmployee.getSalary());
         return employeeRepository.save(existingEmployee);
     }
@@ -47,5 +55,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteEmployee(Long id) {
         employeeRepository.deleteById(id);
     }
+
 
 }

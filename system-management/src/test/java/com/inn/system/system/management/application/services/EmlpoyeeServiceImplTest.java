@@ -76,7 +76,7 @@ class EmployeeServiceImplTest {
         Employee result = employeeService.updateEmployee(1L, updatedEmployee);
 
         //Assert
-        assertEquals("Senior Developer", result.getPosition());
+        assertEquals("Senior Developer", result.getJobTitle());
         assertEquals(70000.0, result.getSalary());
 
 

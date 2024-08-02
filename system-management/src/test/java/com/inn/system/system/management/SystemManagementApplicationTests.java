@@ -16,7 +16,7 @@ import com.inn.system.system.management.employee.application.port.in.EmployeeSer
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -75,7 +75,7 @@ public class SystemManagementApplicationTests{
     @Test
     void testUpdateEmployee() {
         // Modification de l'employé de test
-        testEmployee.setPosition("Senior Developer");
+        testEmployee.setJobTitle("Senior Developer");
 
         // Configuration du mock
         when(employeeRepository.findById(1L)).thenReturn(Optional.of(testEmployee));
@@ -106,10 +106,11 @@ public class SystemManagementApplicationTests{
     @Test
     void testGetAllEmployees() {
         // Création d'une liste d'employés de test
-        List<Employee> employees = Arrays.asList(
-                testEmployee,
-                new Employee(2L, "Jane Smith", "Manager", 70000.0)
+        List<Employee> employees = List.of(
+                testEmployee = new Employee(2L, "Jane Smith", "Manager", 70000.0)
+
         );
+
 
         // Configuration du mock
         when(employeeRepository.findAll()).thenReturn(employees);
@@ -122,4 +123,7 @@ public class SystemManagementApplicationTests{
         assertEquals(2, allEmployees.size());
         verify(employeeRepository, times(1)).findAll();
     }
+
+
+
 }
