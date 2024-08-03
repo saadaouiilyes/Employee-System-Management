@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 import com.inn.system.system.management.employee.domain.model.Employee;
-import com.inn.system.system.management.employee.application.port.out.EmployeeRepository;
-import com.inn.system.system.management.employee.application.port.in.EmployeeService;
+import com.inn.system.system.management.employee.domain.port.out.EmployeeRepository;
+import com.inn.system.system.management.employee.domain.port.in.EmployeeUseCase;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @SpringBootTest
 public class SystemManagementApplicationTests{
     @InjectMocks // Assuming you are using Mockito for unit testing
-    private EmployeeService employeeService;
+    private EmployeeUseCase employeeUseCase;
 
     @Mock // Assuming you are using Mockito for unit testing
     private EmployeeRepository employeeRepository;
@@ -40,7 +40,7 @@ public class SystemManagementApplicationTests{
     @Test
     void contextLoads() {
         // Vérifie que le contexte de l'application se charge correctement
-        assertNotNull(employeeService);
+        assertNotNull(employeeUseCase);
         assertNotNull(employeeRepository);
     }
 
@@ -50,7 +50,7 @@ public class SystemManagementApplicationTests{
         when(employeeRepository.save(any(Employee.class))).thenReturn(testEmployee);
 
         // Appel de la méthode de service pour créer un employé
-        Employee createdEmployee = employeeService.createEmployee(testEmployee);
+        Employee createdEmployee = employeeUseCase.createEmployee(testEmployee);
 
         // Vérifications
         assertNotNull(createdEmployee);
@@ -64,7 +64,7 @@ public class SystemManagementApplicationTests{
         when(employeeRepository.findById(1L)).thenReturn(Optional.of(testEmployee));
 
         // Appel de la méthode de service pour récupérer un employé
-        Employee foundEmployee = employeeService.getEmployeeById(1L);
+        Employee foundEmployee = employeeUseCase.getEmployeeById(1L);
 
         // Vérifications
         assertNotNull(foundEmployee);
@@ -82,7 +82,7 @@ public class SystemManagementApplicationTests{
         when(employeeRepository.save(any(Employee.class))).thenReturn(testEmployee);
 
         // Appel de la méthode de service pour mettre à jour un employé
-        Employee updatedEmployee = employeeService.updateEmployee(1L, testEmployee);
+        Employee updatedEmployee = employeeUseCase.updateEmployee(1L, testEmployee);
 
         // Vérifications
         assertNotNull(updatedEmployee);
@@ -97,7 +97,7 @@ public class SystemManagementApplicationTests{
         doNothing().when(employeeRepository).deleteById(1L);
 
         // Appel de la méthode de service pour supprimer un employé
-        employeeService.deleteEmployee(1L);
+        employeeUseCase.deleteEmployee(1L);
 
         // Vérification que la méthode deleteById a été appelée
         verify(employeeRepository, times(1)).deleteById(1L);
@@ -116,7 +116,7 @@ public class SystemManagementApplicationTests{
         when(employeeRepository.findAll()).thenReturn(employees);
 
         // Appel de la méthode de service pour récupérer tous les employés
-        List<Employee> allEmployees = employeeService.getAllEmployees();
+        List<Employee> allEmployees = employeeUseCase.getAllEmployees();
 
         // Vérifications
         assertNotNull(allEmployees);

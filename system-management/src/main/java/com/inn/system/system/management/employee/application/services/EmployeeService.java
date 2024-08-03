@@ -1,26 +1,29 @@
 package com.inn.system.system.management.employee.application.services;
 
-import com.inn.system.system.management.employee.infrastructure.adapters.out.EmployeeJpaRepository;
-import com.inn.system.system.management.employee.application.port.in.EmployeeService;
-import com.inn.system.system.management.employee.application.port.out.EmployeeRepository;
+/*import com.inn.system.system.management.employee.infrastucture.adapters.repository.EmployeeJpaRepository;*/
+import com.inn.system.system.management.employee.domain.port.in.EmployeeUseCase;
+import com.inn.system.system.management.employee.domain.port.out.EmployeeRepository;
 import com.inn.system.system.management.employee.domain.model.Employee;
+
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService {
+public class EmployeeService implements EmployeeUseCase {
 
 
 
-    private final  EmployeeJpaRepository employeeJpaRepository;
+    /*private final  EmployeeJpaRepository employeeJpaRepository;*/
     private final EmployeeRepository employeeRepository;
 
 
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeJpaRepository employeeJpaRepository , EmployeeRepository employeeRepository) {
-        this.employeeJpaRepository = employeeJpaRepository;
+    public EmployeeService( EmployeeRepository employeeRepository) {
+
         this.employeeRepository = employeeRepository;
 
     }
@@ -38,16 +41,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAllEmployees() {
-        return employeeJpaRepository.findAll();
+        return employeeRepository.findAll();
     }
 
     @Override
-    public Employee updateEmployee(Long id, @org.jetbrains.annotations.NotNull Employee employee) {
+    public Employee updateEmployee(Long id, @NotNull Employee employee) {
         Employee existingEmployee = employeeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
         existingEmployee.setName(employee.getName());
         existingEmployee.setJobTitle(employee.getJobTitle());
-        employee.setSalary(existingEmployee.getSalary());
+
         return employeeRepository.save(existingEmployee);
     }
 

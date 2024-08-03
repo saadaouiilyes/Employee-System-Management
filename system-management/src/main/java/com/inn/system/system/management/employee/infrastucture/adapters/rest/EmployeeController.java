@@ -1,6 +1,6 @@
-package com.inn.system.system.management.employee.infrastructure.adapters.in;
+package com.inn.system.system.management.employee.infrastucture.adapters.rest;
 
-import com.inn.system.system.management.employee.application.services.EmployeeServiceImpl;
+import com.inn.system.system.management.employee.application.services.EmployeeService;
 import com.inn.system.system.management.employee.domain.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +12,10 @@ import java.util.List;
 @RequestMapping("/api/employees")
 public class EmployeeController {
 
-    private final EmployeeServiceImpl employeeService;
+    private final EmployeeService employeeService;
 
     @Autowired
-    public EmployeeController(EmployeeServiceImpl employeeService) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
