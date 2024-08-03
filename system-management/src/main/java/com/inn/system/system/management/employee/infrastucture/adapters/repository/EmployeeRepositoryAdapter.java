@@ -2,14 +2,15 @@ package com.inn.system.system.management.employee.infrastucture.adapters.reposit
 
 import com.inn.system.system.management.employee.domain.model.Employee;
 import com.inn.system.system.management.employee.domain.port.out.EmployeeRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface EmployeeRepositoryAdapter implements EmployeeRepository {
+@Repository
+public class EmployeeRepositoryAdapter implements EmployeeRepository {
+
     private final EmployeeJpaRepository employeeJpaRepository;
 
     @Autowired
@@ -38,7 +39,8 @@ public interface EmployeeRepositoryAdapter implements EmployeeRepository {
     }
 
     @Override
-    public boolean existsById(Long id) {
-        return employeeJpaRepository.existsById(id);
+    public Boolean existsById(Long id) {
+        employeeJpaRepository.existsById(id);
+        return null;
     }
 }

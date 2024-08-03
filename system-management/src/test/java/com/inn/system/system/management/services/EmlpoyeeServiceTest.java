@@ -3,12 +3,15 @@ package com.inn.system.system.management.services;
 import com.inn.system.system.management.employee.application.services.EmployeeService;
 import com.inn.system.system.management.employee.domain.port.out.EmployeeRepository;
 import com.inn.system.system.management.employee.domain.model.Employee;
-import org.junit.jupiter.api.BeforeEach;
+
+import org.jetbrains.annotations.Contract;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import org.mockito.MockitoAnnotations;
+
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+
+@ExtendWith(MockitoExtension.class)
 class EmployeeServiceTest {
 
     @Mock
@@ -26,10 +31,7 @@ class EmployeeServiceTest {
     @InjectMocks
     private EmployeeService employeeService;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
+
 
     @Test
     void testCreateEmployee() {
@@ -67,7 +69,11 @@ class EmployeeServiceTest {
         verify(employeeRepository, times(1)).findAll();
     }
 
-    private void assertNotNull(List<Employee> result) {
+
+
+
+    @Contract(pure = true)
+    private void assertNotNull(List<Employee> ignoredResult) {
     }
 
     @Test
@@ -76,19 +82,17 @@ class EmployeeServiceTest {
         Employee existingEmployee = new Employee(1L, "John", "IT", "Male", "B.Tech", "john@example.com", "1234567890", "2023-01-01");
         Employee updatedEmployee = new Employee(1L, "John Doe", "IT", "Male", "B.Tech", "john@example.com", "1234567890", "2023-01-01");
 
-
         when(employeeRepository.findById(1L)).thenReturn(Optional.of(existingEmployee));
         when(employeeRepository.save(any(Employee.class))).thenReturn(updatedEmployee);
 
         //Act
         Employee result = employeeService.updateEmployee(1L, updatedEmployee);
-        assertNotNull(result);
+
         //Assert
+
         assertEquals("John Doe", result.getName());
 
-
-
-
+        //verify
         verify(employeeRepository, times(1)).findById(1L);
         verify(employeeRepository, times(1)).save(updatedEmployee);
     }

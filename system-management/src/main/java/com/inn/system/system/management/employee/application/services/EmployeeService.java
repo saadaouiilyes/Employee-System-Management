@@ -4,7 +4,7 @@ package com.inn.system.system.management.employee.application.services;
 import com.inn.system.system.management.employee.domain.port.in.EmployeeUseCase;
 import com.inn.system.system.management.employee.domain.port.out.EmployeeRepository;
 import com.inn.system.system.management.employee.domain.model.Employee;
-
+import com.inn.system.system.management.employee.commun.exception.ResourceNotFoundException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class EmployeeService implements EmployeeUseCase {
     @Override
     public Employee getEmployeeById(Long id) {
         return employeeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", id));
     }
 
     @Override

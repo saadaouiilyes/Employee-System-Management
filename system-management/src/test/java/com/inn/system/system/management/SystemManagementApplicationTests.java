@@ -34,7 +34,7 @@ public class SystemManagementApplicationTests{
     @BeforeEach
     void setUp() {
         // Initialisation d'un employé de test avant chaque méthode de test
-        testEmployee = new Employee(1L, "John Doe", "Developer", 50000.0);
+        testEmployee = new Employee(1L, "John", "IT", "Male", "B.Tech", "john@example.com", "1234567890", "2023-01-01");
     }
 
     @Test
@@ -107,7 +107,7 @@ public class SystemManagementApplicationTests{
     void testGetAllEmployees() {
         // Création d'une liste d'employés de test
         List<Employee> employees = List.of(
-                testEmployee = new Employee(2L, "Jane Smith", "Manager", 70000.0)
+                testEmployee = new Employee(2L, "Jane", "HR", "Female", "MBA", "jane@example.com", "0987654321", "2023-01-02")
 
         );
 

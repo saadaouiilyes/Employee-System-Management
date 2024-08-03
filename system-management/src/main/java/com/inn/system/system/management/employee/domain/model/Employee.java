@@ -32,13 +32,13 @@ public class Employee {
     private String joiningDate;
 
 
-    public Employee(long id, String name, String jobTitle, String departement , String gender, String degree , String email,String mobile) {
+    public Employee(long id, String name, String jobTitle, String departement , String gender,  String email,String mobile , String joiningDate) {
         this.id = id;
         this.name = name;
         this.jobTitle = jobTitle;
         this.department = departement;
         this.gender = gender;
-        this.degree = degree;
+
         this.email = email;
         this.mobile = mobile;
         this.joiningDate = joiningDate;
